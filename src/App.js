@@ -1,11 +1,15 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { maskify } from './util/maskify';
 import Webcam from './components/Webcam';
 import { exportComponentAsPDF } from 'react-component-export-image';
 import ImgSelector from './components/ImgSelector';
 
 export default function App() {
+  const [mouth, setMouth] = useState('mouth1');
+
   const componentRef = useRef();
+
+  console.log(mouth);
 
   const giveMask = () => {
     maskify([
@@ -32,7 +36,7 @@ export default function App() {
       >
         Export As PDF
       </button>
-      <ImgSelector />
+      <ImgSelector onChange={(e) => setMouth(e.value)} />
     </div>
   );
 }

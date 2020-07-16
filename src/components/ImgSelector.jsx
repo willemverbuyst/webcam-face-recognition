@@ -10,20 +10,18 @@ import mouth6 from '../mouth/mouth6.png';
 
 const options = [
   {
-    value: 'mouth 1',
+    value: 'mouth1',
     label: (
       <div>
-        <img src={mouth1} height="30px" width="30px" />
-        Mouth 1{' '}
+        <img src={mouth1} height="30px" width="30px" alt="mouth" />
       </div>
     ),
   },
   {
-    value: 'mouth 2',
+    value: 'mouth2',
     label: (
       <div>
-        <img src={mouth2} height="30px" width="30px" />
-        Mouth 1{' '}
+        <img src={mouth2} height="30px" width="30px" alt="mouth" />
       </div>
     ),
   },
@@ -31,17 +29,40 @@ const options = [
     value: 'mouth3 ',
     label: (
       <div>
-        <img src={mouth3} height="30px" width="30px" />
-        Mouth 1{' '}
+        <img src={mouth3} height="30px" width="30px" alt="mouth" />
+      </div>
+    ),
+  },
+  {
+    value: 'mouth4 ',
+    label: (
+      <div>
+        <img src={mouth4} height="30px" width="30px" alt="mouth" />
+      </div>
+    ),
+  },
+  {
+    value: 'mouth5 ',
+    label: (
+      <div>
+        <img src={mouth5} height="30px" width="30px" alt="mouth" />
+      </div>
+    ),
+  },
+  {
+    value: 'mouth6 ',
+    label: (
+      <div>
+        <img src={mouth6} height="30px" width="30px" alt="mouth" />
       </div>
     ),
   },
 ];
 
-export default function ImgSelector() {
+export default function ImgSelector(props) {
   return (
     <div style={{ width: '100px' }}>
-      <Select options={options} autosize={true} />
+      <Select options={options} autosize={true} onChange={props.onChange} />
     </div>
   );
 }

@@ -29,6 +29,7 @@ function WebcamCapture() {
             ref={webcamRef}
             screenshotFormat="image/jpeg"
             imageSmoothing={true}
+            mirrored={true}
           />
         </div>
         <div className="itemWithImg" style={{ padding: '2rem' }}>

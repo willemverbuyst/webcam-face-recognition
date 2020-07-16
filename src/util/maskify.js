@@ -56,6 +56,7 @@ export async function maskify(masks) {
         return;
       }
       console.log(detection);
+      console.log(detection.landmarks.getLeftEyeBrow());
 
       const overlayValues = getOverlayValues(detection.landmarks);
 
