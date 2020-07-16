@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { maskify } from './util/maskify';
 import Webcam from './components/Webcam';
 import { exportComponentAsPDF } from 'react-component-export-image';
+import ImgSelector from './components/ImgSelector';
 
 export default function App() {
   const componentRef = useRef();
@@ -31,6 +32,7 @@ export default function App() {
       >
         Export As PDF
       </button>
+      <ImgSelector />
     </div>
   );
 }
