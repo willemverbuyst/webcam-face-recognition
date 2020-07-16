@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { maskify } from './util/maskify';
 import Webcam from './components/Webcam';
+import { exportComponentAsPDF } from 'react-component-export-image';
 
 export default function App() {
+  const componentRef = useRef();
+
   const giveMask = () => {
     maskify([
       '/images/overlay-blue-monster.png',
@@ -18,8 +21,16 @@ export default function App() {
 
   return (
     <div>
-      <Webcam />
+      <div ref={componentRef}>
+        <Webcam />
+      </div>
       <button onClick={giveMask}>maskify me</button>
+      <button
+        className="pdf-btn"
+        onClick={() => exportComponentAsPDF(componentRef)}
+      >
+        Export As PDF
+      </button>
     </div>
   );
 }
