@@ -44,9 +44,8 @@ export default function App() {
         Export As PDF
       </button>
       <div style={{ display: 'flex' }}>
-        {' '}
         <MouthSelector onChange={(e) => setMouth(e.value)} />
-        <NoseSelector onChange={(e) => setMouth(e.value)} />
+        <NoseSelector onChange={(e) => setNose(e.value)} />
       </div>
     </div>
   );

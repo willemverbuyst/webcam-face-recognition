@@ -2,7 +2,6 @@ import * as faceapi from 'face-api.js';
 
 const getOverlayValues = (landmarks) => {
   const nose = landmarks.getNose();
-  const jawline = landmarks.getJawOutline();
   const mouth = landmarks.getMouth();
 
   const mouthLeft = mouth[0];
@@ -14,19 +13,6 @@ const getOverlayValues = (landmarks) => {
   const noseBottom = nose[6];
   const noseMiddle = nose[0];
 
-  const jawLeft = jawline[0];
-  const jawRight = jawline.splice(-1)[0];
-  const adjacent = jawRight.x - jawLeft.x;
-  const opposite = jawRight.y - jawLeft.y;
-  const jawLength = Math.sqrt(Math.pow(adjacent, 2) + Math.pow(opposite, 2));
-  console.log(nose);
-
-  // Both of these work. The chat believes atan2 is better.
-  // I don't know why. (It doesn’t break if we divide by zero.)
-  // const angle = Math.round(Math.tan(opposite / adjacent) * 100)
-  const angle = Math.atan2(opposite, adjacent) * (180 / Math.PI);
-  const width = jawLength * 2.2;
-
   return {
     mouth: {
       mouthMiddle: mouthMiddle - 25,
@@ -37,10 +23,6 @@ const getOverlayValues = (landmarks) => {
       noseBottom: noseBottom.y - 50,
       noseMiddle: noseMiddle.x - 25,
     },
-    width,
-    angle,
-    leftOffset: jawLeft.x - width * 0.27,
-    topOffset: nose[0].y - width * 0.47,
   };
 };
 
@@ -71,7 +53,7 @@ export async function maskify(mouth, nose) {
       }
 
       const overlayValues = getOverlayValues(detection.landmarks);
-      console.log(overlayValues.mouth.mouthScale);
+
       const mouthOverlay = document.createElement('img');
       const noseOverlay = document.createElement('img');
 
