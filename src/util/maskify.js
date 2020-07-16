@@ -5,6 +5,7 @@ const getOverlayValues = (landmarks) => {
   const mouth = landmarks.getMouth();
   const leftEye = landmarks.getLeftEye();
   const rightEye = landmarks.getRightEye();
+  const leftEyeBrow = landmarks.getLeftEyeBrow();
 
   const mouthLeft = mouth[0];
   const mouthRight = mouth[6];
@@ -18,6 +19,8 @@ const getOverlayValues = (landmarks) => {
   const leftEyeLeft = leftEye[0];
 
   const rightEyeLeft = rightEye[0];
+
+  const leftEyeBrowLeft = leftEyeBrow[0];
 
   return {
     mouth: {
@@ -37,10 +40,14 @@ const getOverlayValues = (landmarks) => {
       rightEyeLeft: rightEyeLeft.x - 15,
       rightEyeTop: rightEyeLeft.y - 25,
     },
+    leftEyeBrow: {
+      leftEyeBrowLeft: leftEyeBrowLeft.x,
+      leftEyeBrowTop: leftEyeBrowLeft.y - 35,
+    },
   };
 };
 
-export async function maskify(mouth, nose, leftEye, rightEye) {
+export async function maskify(mouth, nose, leftEye, rightEye, leftEyeBrow) {
   console.log('Maskify starting...');
   await Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
@@ -71,16 +78,19 @@ export async function maskify(mouth, nose, leftEye, rightEye) {
       const noseOverlay = document.createElement('img');
       const leftEyeOverlay = document.createElement('img');
       const rightEyeOverlay = document.createElement('img');
+      const leftEyeBrowOverlay = document.createElement('img');
 
       mouthOverlay.src = mouth;
       noseOverlay.src = nose;
       leftEyeOverlay.src = leftEye;
       rightEyeOverlay.src = rightEye;
+      leftEyeBrowOverlay.src = leftEyeBrow;
 
       mouthOverlay.alt = 'mouth overlay.';
       noseOverlay.alt = 'nose overlay.';
       leftEyeOverlay.alt = 'left eye overlay.';
       leftEyeOverlay.alt = 'right eye overlay.';
+      leftEyeBrowOverlay.alt = 'right eye brow overlay.';
 
       mouthOverlay.style.cssText = `
         position: absolute;
@@ -107,12 +117,18 @@ export async function maskify(mouth, nose, leftEye, rightEye) {
         top: ${overlayValues.rightEye.rightEyeTop}px;
         padding: 2rem;
       `;
+      leftEyeBrowOverlay.style.cssText = `
+        position: absolute;
+        left: ${overlayValues.leftEyeBrow.leftEyeBrowLeft}px;
+        top: ${overlayValues.leftEyeBrow.leftEyeBrowTop}px;
+        padding: 2rem;
+      `;
 
       item.appendChild(mouthOverlay);
-      item.appendChild(noseOverlay);
       item.appendChild(leftEyeOverlay);
-      item.appendChild(noseOverlay);
       item.appendChild(rightEyeOverlay);
+      item.appendChild(leftEyeBrowOverlay);
+      item.appendChild(noseOverlay);
     };
 
     // To avoid CORS issues we create a cross-origin-friendly copy of the image.
