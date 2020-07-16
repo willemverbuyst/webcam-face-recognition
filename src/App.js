@@ -4,11 +4,13 @@ import Webcam from './components/Webcam';
 import { exportComponentAsPDF } from 'react-component-export-image';
 import MouthSelector from './components/MouthSelector';
 import NoseSelector from './components/NoseSelector';
+import LeftEyeSelector from './components/LeftEyeSelector';
 
 export default function App() {
   const [mouth, setMouth] = useState('mouth1');
   const [nose, setNose] = useState('nose1');
-  console.log(mouth.slice(-1));
+  const [leftEye, setLeftEye] = useState('nose1');
+
   const componentRef = useRef();
 
   const mouthArray = [
@@ -27,8 +29,20 @@ export default function App() {
     '/images/nose4.png',
   ];
 
+  const leftEyeArray = [
+    '/images/leftEye1.png',
+    '/images/leftEye2.png',
+    '/images/leftEye3.png',
+    '/images/leftEye4.png',
+    '/images/leftEye5.png',
+  ];
+
   const giveMask = () => {
-    maskify(mouthArray[mouth.slice(-1) - 1], noseArray[nose.slice(-1) - 1]);
+    maskify(
+      mouthArray[mouth.slice(-1) - 1],
+      noseArray[nose.slice(-1) - 1],
+      leftEyeArray[leftEye.slice(-1) - 1]
+    );
   };
 
   return (
@@ -46,6 +60,7 @@ export default function App() {
       <div style={{ display: 'flex' }}>
         <MouthSelector onChange={(e) => setMouth(e.value)} />
         <NoseSelector onChange={(e) => setNose(e.value)} />
+        <LeftEyeSelector onChange={(e) => setLeftEye(e.value)} />
       </div>
     </div>
   );

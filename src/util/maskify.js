@@ -3,6 +3,7 @@ import * as faceapi from 'face-api.js';
 const getOverlayValues = (landmarks) => {
   const nose = landmarks.getNose();
   const mouth = landmarks.getMouth();
+  const leftEye = landmarks.getLeftEye();
 
   const mouthLeft = mouth[0];
   const mouthRight = mouth[6];
@@ -12,6 +13,8 @@ const getOverlayValues = (landmarks) => {
 
   const noseBottom = nose[6];
   const noseMiddle = nose[0];
+
+  const leftEyeLeft = leftEye[0];
 
   return {
     mouth: {
@@ -23,10 +26,14 @@ const getOverlayValues = (landmarks) => {
       noseBottom: noseBottom.y - 50,
       noseMiddle: noseMiddle.x - 25,
     },
+    leftEye: {
+      leftEyeLeft: leftEyeLeft.x - 25,
+      leftEyeTop: leftEyeLeft.y - 25,
+    },
   };
 };
 
-export async function maskify(mouth, nose) {
+export async function maskify(mouth, nose, leftEye) {
   console.log('Maskify starting...');
   await Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
@@ -56,11 +63,16 @@ export async function maskify(mouth, nose) {
 
       const mouthOverlay = document.createElement('img');
       const noseOverlay = document.createElement('img');
+      const leftEyeOverlay = document.createElement('img');
 
       mouthOverlay.src = mouth;
       noseOverlay.src = nose;
+      leftEyeOverlay.src = leftEye;
+
       mouthOverlay.alt = 'mouth overlay.';
-      mouthOverlay.alt = 'nose overlay.';
+      noseOverlay.alt = 'nose overlay.';
+      leftEyeOverlay.alt = 'nose overlay.';
+
       mouthOverlay.style.cssText = `
         position: absolute;
         left: ${overlayValues.mouth.mouthMiddle}px;
@@ -74,12 +86,17 @@ export async function maskify(mouth, nose) {
         top: ${overlayValues.nose.noseBottom}px;
         padding: 2rem;
       `;
+      leftEyeOverlay.style.cssText = `
+        position: absolute;
+        left: ${overlayValues.leftEye.leftEyeLeft}px;
+        top: ${overlayValues.leftEye.leftEyeTop}px;
+        padding: 2rem;
+      `;
 
       item.appendChild(mouthOverlay);
       item.appendChild(noseOverlay);
+      item.appendChild(leftEyeOverlay);
     };
-
-    //     width: ${overlayValues.width * scale}px;
 
     // To avoid CORS issues we create a cross-origin-friendly copy of the image.
     const image = new Image();
