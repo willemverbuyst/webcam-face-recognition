@@ -20,7 +20,7 @@ function WebcamCapture() {
     <div>
       <button onClick={capture}>Capture photo</button>
       <div style={{ display: 'flex' }}>
-        <div style={{ padding: '2rem' }}>
+        <div>
           <Webcam
             videoConstraints={videoConstraints}
             width={300}
@@ -32,7 +32,7 @@ function WebcamCapture() {
             id="webcam"
           />
         </div>
-        <div style={{ padding: '2rem' }}>
+        <div className="itemWithImg">
           {imageSrc && (
             <img
               id="webcam-image"

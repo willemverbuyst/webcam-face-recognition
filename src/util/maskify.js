@@ -41,7 +41,7 @@ export async function maskify(masks) {
 
   console.log('models loaded');
 
-  const items = document.querySelectorAll('.item');
+  const items = document.querySelectorAll('.itemWithImg');
 
   items.forEach(async (item) => {
     const originalImage = item.querySelector('img');
@@ -68,7 +68,7 @@ export async function maskify(masks) {
         top: ${overlayValues.topOffset * scale}px;
         width: ${overlayValues.width * scale}px;
         transform: rotate(${overlayValues.angle}deg);
-        z-indes: 100;
+        z-index: 100;
       `;
 
       item.appendChild(overlay);
