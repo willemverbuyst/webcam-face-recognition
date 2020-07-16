@@ -29,11 +29,13 @@ function WebcamCapture() {
             ref={webcamRef}
             screenshotFormat="image/jpeg"
             imageSmoothing={true}
+            id="webcam"
           />
         </div>
         <div style={{ padding: '2rem' }}>
           {imageSrc && (
             <img
+              id="webcam-image"
               src={imageSrc}
               alt="a screenshot of your face"
               style={{ width: 300, height: 450 }}
