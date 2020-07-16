@@ -4,16 +4,22 @@ const getOverlayValues = (landmarks) => {
   const nose = landmarks.getNose();
   const jawline = landmarks.getJawOutline();
   const mouth = landmarks.getMouth();
+
   const mouthLeft = mouth[0];
   const mouthRight = mouth[6];
-  const scale = mouthRight.x - mouthLeft.x / 45;
+  const mouthMiddle = (mouthLeft.x + mouthRight.x) / 2;
   const mouthTop = mouth[17];
+  const mouthScale = (mouthRight - mouthLeft) / 50;
+
+  const noseBottom = nose[6];
+  const noseMiddle = nose[0];
 
   const jawLeft = jawline[0];
   const jawRight = jawline.splice(-1)[0];
   const adjacent = jawRight.x - jawLeft.x;
   const opposite = jawRight.y - jawLeft.y;
   const jawLength = Math.sqrt(Math.pow(adjacent, 2) + Math.pow(opposite, 2));
+  console.log(nose);
 
   // Both of these work. The chat believes atan2 is better.
   // I don't know why. (It doesn’t break if we divide by zero.)
@@ -22,9 +28,15 @@ const getOverlayValues = (landmarks) => {
   const width = jawLength * 2.2;
 
   return {
-    mouthOffsetL: mouthLeft.x + 45,
-    mouthTop: mouthTop.y + 15,
-    scale,
+    mouth: {
+      mouthMiddle: mouthMiddle - 25,
+      mouthTop: mouthTop.y - 25,
+      mouthScale: mouthScale,
+    },
+    nose: {
+      noseBottom: noseBottom.y - 50,
+      noseMiddle: noseMiddle.x - 25,
+    },
     width,
     angle,
     leftOffset: jawLeft.x - width * 0.27,
@@ -32,8 +44,7 @@ const getOverlayValues = (landmarks) => {
   };
 };
 
-export async function maskify(mask) {
-  console.log(mask);
+export async function maskify(mouth, nose) {
   console.log('Maskify starting...');
   await Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
@@ -58,23 +69,32 @@ export async function maskify(mask) {
       if (!detection) {
         return;
       }
-      console.log(detection);
-      console.log(detection.landmarks.getMouth());
 
       const overlayValues = getOverlayValues(detection.landmarks);
+      console.log(overlayValues.mouth.mouthScale);
+      const mouthOverlay = document.createElement('img');
+      const noseOverlay = document.createElement('img');
 
-      const overlay = document.createElement('img');
-      overlay.src = mask;
-      overlay.alt = 'mask overlay.';
-      overlay.style.cssText = `
+      mouthOverlay.src = mouth;
+      noseOverlay.src = nose;
+      mouthOverlay.alt = 'mouth overlay.';
+      mouthOverlay.alt = 'nose overlay.';
+      mouthOverlay.style.cssText = `
         position: absolute;
-        left: ${overlayValues.mouthOffsetL}px;
-        top: ${overlayValues.mouthTop}px;
-        transform: scale(${scale})
+        left: ${overlayValues.mouth.mouthMiddle}px;
+        top: ${overlayValues.mouth.mouthTop}px;
+        transform: scale(${overlayValues.mouth.mouthScale}, ${overlayValues.mouth.mouthScale});
+        padding: 2rem;
+      `;
+      noseOverlay.style.cssText = `
+        position: absolute;
+        left: ${overlayValues.nose.noseMiddle}px;
+        top: ${overlayValues.nose.noseBottom}px;
         padding: 2rem;
       `;
 
-      item.appendChild(overlay);
+      item.appendChild(mouthOverlay);
+      item.appendChild(noseOverlay);
     };
 
     //     width: ${overlayValues.width * scale}px;

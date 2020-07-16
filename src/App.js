@@ -3,9 +3,11 @@ import { maskify } from './util/maskify';
 import Webcam from './components/Webcam';
 import { exportComponentAsPDF } from 'react-component-export-image';
 import MouthSelector from './components/MouthSelector';
+import NoseSelector from './components/NoseSelector';
 
 export default function App() {
   const [mouth, setMouth] = useState('mouth1');
+  const [nose, setNose] = useState('nose1');
   console.log(mouth.slice(-1));
   const componentRef = useRef();
 
@@ -18,8 +20,15 @@ export default function App() {
     '/images/mouth6.png',
   ];
 
+  const noseArray = [
+    '/images/nose1.png',
+    '/images/nose2.png',
+    '/images/nose3.png',
+    '/images/nose4.png',
+  ];
+
   const giveMask = () => {
-    maskify(mouthArray[mouth.slice(-1) - 1]);
+    maskify(mouthArray[mouth.slice(-1) - 1], noseArray[nose.slice(-1) - 1]);
   };
 
   return (
@@ -34,7 +43,11 @@ export default function App() {
       >
         Export As PDF
       </button>
-      <MouthSelector onChange={(e) => setMouth(e.value)} />
+      <div style={{ display: 'flex' }}>
+        {' '}
+        <MouthSelector onChange={(e) => setMouth(e.value)} />
+        <NoseSelector onChange={(e) => setMouth(e.value)} />
+      </div>
     </div>
   );
 }
