@@ -5,11 +5,13 @@ import { exportComponentAsPDF } from 'react-component-export-image';
 import MouthSelector from './components/MouthSelector';
 import NoseSelector from './components/NoseSelector';
 import LeftEyeSelector from './components/LeftEyeSelector';
+import RightEyeSelector from './components/RightEyeSelector';
 
 export default function App() {
   const [mouth, setMouth] = useState('mouth1');
   const [nose, setNose] = useState('nose1');
-  const [leftEye, setLeftEye] = useState('nose1');
+  const [leftEye, setLeftEye] = useState('leftEye1');
+  const [rightEye, setRightEye] = useState('rightEye1');
 
   const componentRef = useRef();
 
@@ -37,11 +39,20 @@ export default function App() {
     '/images/leftEye5.png',
   ];
 
+  const rightEyeArray = [
+    '/images/rightEye1.png',
+    '/images/rightEye2.png',
+    '/images/rightEye3.png',
+    '/images/rightEye4.png',
+    '/images/rightEye5.png',
+  ];
+
   const giveMask = () => {
     maskify(
       mouthArray[mouth.slice(-1) - 1],
       noseArray[nose.slice(-1) - 1],
-      leftEyeArray[leftEye.slice(-1) - 1]
+      leftEyeArray[leftEye.slice(-1) - 1],
+      rightEyeArray[rightEye.slice(-1) - 1]
     );
   };
 
@@ -61,6 +72,7 @@ export default function App() {
         <MouthSelector onChange={(e) => setMouth(e.value)} />
         <NoseSelector onChange={(e) => setNose(e.value)} />
         <LeftEyeSelector onChange={(e) => setLeftEye(e.value)} />
+        <RightEyeSelector onChange={(e) => setRightEye(e.value)} />
       </div>
     </div>
   );
