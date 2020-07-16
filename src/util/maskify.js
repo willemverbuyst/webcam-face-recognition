@@ -6,6 +6,7 @@ const getOverlayValues = (landmarks) => {
   const leftEye = landmarks.getLeftEye();
   const rightEye = landmarks.getRightEye();
   const leftEyeBrow = landmarks.getLeftEyeBrow();
+  const rightEyeBrow = landmarks.getRightEyeBrow();
 
   const mouthLeft = mouth[0];
   const mouthRight = mouth[6];
@@ -21,6 +22,8 @@ const getOverlayValues = (landmarks) => {
   const rightEyeLeft = rightEye[0];
 
   const leftEyeBrowLeft = leftEyeBrow[0];
+
+  const rightEyeBrowLeft = rightEyeBrow[0];
 
   return {
     mouth: {
@@ -42,12 +45,23 @@ const getOverlayValues = (landmarks) => {
     },
     leftEyeBrow: {
       leftEyeBrowLeft: leftEyeBrowLeft.x,
-      leftEyeBrowTop: leftEyeBrowLeft.y - 35,
+      leftEyeBrowTop: leftEyeBrowLeft.y - 45,
+    },
+    rightEyeBrow: {
+      rightEyeBrowLeft: rightEyeBrowLeft.x,
+      rightEyeBrowTop: rightEyeBrowLeft.y - 35,
     },
   };
 };
 
-export async function maskify(mouth, nose, leftEye, rightEye, leftEyeBrow) {
+export async function maskify(
+  mouth,
+  nose,
+  leftEye,
+  rightEye,
+  leftEyeBrow,
+  rightEyeBrow
+) {
   console.log('Maskify starting...');
   await Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
@@ -79,18 +93,21 @@ export async function maskify(mouth, nose, leftEye, rightEye, leftEyeBrow) {
       const leftEyeOverlay = document.createElement('img');
       const rightEyeOverlay = document.createElement('img');
       const leftEyeBrowOverlay = document.createElement('img');
+      const rightEyeBrowOverlay = document.createElement('img');
 
       mouthOverlay.src = mouth;
       noseOverlay.src = nose;
       leftEyeOverlay.src = leftEye;
       rightEyeOverlay.src = rightEye;
       leftEyeBrowOverlay.src = leftEyeBrow;
+      rightEyeBrowOverlay.src = rightEyeBrow;
 
       mouthOverlay.alt = 'mouth overlay.';
       noseOverlay.alt = 'nose overlay.';
       leftEyeOverlay.alt = 'left eye overlay.';
       leftEyeOverlay.alt = 'right eye overlay.';
-      leftEyeBrowOverlay.alt = 'right eye brow overlay.';
+      leftEyeBrowOverlay.alt = 'left eye brow overlay.';
+      rightEyeBrowOverlay.alt = 'right eye brow overlay.';
 
       mouthOverlay.style.cssText = `
         position: absolute;
@@ -123,11 +140,18 @@ export async function maskify(mouth, nose, leftEye, rightEye, leftEyeBrow) {
         top: ${overlayValues.leftEyeBrow.leftEyeBrowTop}px;
         padding: 2rem;
       `;
+      rightEyeBrowOverlay.style.cssText = `
+        position: absolute;
+        left: ${overlayValues.rightEyeBrow.rightEyeBrowLeft}px;
+        top: ${overlayValues.rightEyeBrow.rightEyeBrowTop}px;
+        padding: 2rem;
+      `;
 
       item.appendChild(mouthOverlay);
       item.appendChild(leftEyeOverlay);
       item.appendChild(rightEyeOverlay);
       item.appendChild(leftEyeBrowOverlay);
+      item.appendChild(rightEyeBrowOverlay);
       item.appendChild(noseOverlay);
     };
 

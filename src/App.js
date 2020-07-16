@@ -7,6 +7,7 @@ import NoseSelector from './components/NoseSelector';
 import LeftEyeSelector from './components/LeftEyeSelector';
 import RightEyeSelector from './components/RightEyeSelector';
 import LeftEyeBrowSelector from './components/LeftEyeBrowSelector';
+import RightEyeBrowSelector from './components/RightEyeBrowSelector';
 
 export default function App() {
   const [mouth, setMouth] = useState('mouth1');
@@ -14,6 +15,7 @@ export default function App() {
   const [leftEye, setLeftEye] = useState('leftEye1');
   const [rightEye, setRightEye] = useState('rightEye1');
   const [leftEyeBrow, setLeftEyeBrow] = useState('leftEyeBrow1');
+  const [rightEyeBrow, setRightEyeBrow] = useState('rightEyeBrow1');
 
   const componentRef = useRef();
 
@@ -57,13 +59,22 @@ export default function App() {
     '/images/leftEyebrow5.png',
   ];
 
+  const rightEyeBrowArray = [
+    '/images/rightEyebrow1.png',
+    '/images/rightEyebrow2.png',
+    '/images/rightEyebrow3.png',
+    '/images/rightEyebrow4.png',
+    '/images/rightEyebrow5.png',
+  ];
+
   const giveMask = () => {
     maskify(
       mouthArray[mouth.slice(-1) - 1],
       noseArray[nose.slice(-1) - 1],
       leftEyeArray[leftEye.slice(-1) - 1],
       rightEyeArray[rightEye.slice(-1) - 1],
-      leftEyeBrowArray[leftEyeBrow.slice(-1) - 1]
+      leftEyeBrowArray[leftEyeBrow.slice(-1) - 1],
+      rightEyeBrowArray[rightEyeBrow.slice(-1) - 1]
     );
   };
 
@@ -85,6 +96,7 @@ export default function App() {
         <LeftEyeSelector onChange={(e) => setLeftEye(e.value)} />
         <RightEyeSelector onChange={(e) => setRightEye(e.value)} />
         <LeftEyeBrowSelector onChange={(e) => setLeftEyeBrow(e.value)} />
+        <RightEyeBrowSelector onChange={(e) => setRightEyeBrow(e.value)} />
       </div>
     </div>
   );
