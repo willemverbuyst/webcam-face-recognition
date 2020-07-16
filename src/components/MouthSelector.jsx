@@ -26,7 +26,7 @@ const options = [
     ),
   },
   {
-    value: 'mouth3 ',
+    value: 'mouth3',
     label: (
       <div>
         <img src={mouth3} height="30px" width="30px" alt="mouth" />
@@ -34,7 +34,7 @@ const options = [
     ),
   },
   {
-    value: 'mouth4 ',
+    value: 'mouth4',
     label: (
       <div>
         <img src={mouth4} height="30px" width="30px" alt="mouth" />
@@ -42,7 +42,7 @@ const options = [
     ),
   },
   {
-    value: 'mouth5 ',
+    value: 'mouth5',
     label: (
       <div>
         <img src={mouth5} height="30px" width="30px" alt="mouth" />
@@ -50,7 +50,7 @@ const options = [
     ),
   },
   {
-    value: 'mouth6 ',
+    value: 'mouth6',
     label: (
       <div>
         <img src={mouth6} height="30px" width="30px" alt="mouth" />

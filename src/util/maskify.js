@@ -32,13 +32,8 @@ const getOverlayValues = (landmarks) => {
   };
 };
 
-const getRandomMask = (masks) => {
-  const index = Math.floor(masks.length * Math.random());
-
-  return masks[index];
-};
-
-export async function maskify(masks) {
+export async function maskify(mask) {
+  console.log(mask);
   console.log('Maskify starting...');
   await Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
@@ -69,7 +64,7 @@ export async function maskify(masks) {
       const overlayValues = getOverlayValues(detection.landmarks);
 
       const overlay = document.createElement('img');
-      overlay.src = getRandomMask(masks);
+      overlay.src = mask;
       overlay.alt = 'mask overlay.';
       overlay.style.cssText = `
         position: absolute;
