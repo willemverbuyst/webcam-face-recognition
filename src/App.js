@@ -13,14 +13,12 @@ export default function App() {
 
   const giveMask = () => {
     maskify([
-      '/images/overlay-blue-monster.png',
-      '/images/overlay-clown.png',
-      '/images/overlay-frankenstein.png',
-      '/images/overlay-pumpkin.png',
-      '/images/overlay-red-monster.png',
-      '/images/overlay-skull.png',
-      '/images/overlay-vampire.png',
-      '/images/overlay-werewolf.png',
+      '/images/mouth1.png',
+      '/images/mouth2.png',
+      '/images/mouth3.png',
+      '/images/mouth4.png',
+      '/images/mouth5.png',
+      '/images/mouth6.png',
     ]);
   };
 

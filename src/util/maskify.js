@@ -3,6 +3,11 @@ import * as faceapi from 'face-api.js';
 const getOverlayValues = (landmarks) => {
   const nose = landmarks.getNose();
   const jawline = landmarks.getJawOutline();
+  const mouth = landmarks.getMouth();
+  const mouthLeft = mouth[0];
+  const mouthRight = mouth[6];
+  const scale = mouthRight.x - mouthLeft.x / 45;
+  const mouthTop = mouth[17];
 
   const jawLeft = jawline[0];
   const jawRight = jawline.splice(-1)[0];
@@ -17,6 +22,9 @@ const getOverlayValues = (landmarks) => {
   const width = jawLength * 2.2;
 
   return {
+    mouthOffsetL: mouthLeft.x + 45,
+    mouthTop: mouthTop.y + 15,
+    scale,
     width,
     angle,
     leftOffset: jawLeft.x - width * 0.27,
@@ -56,7 +64,7 @@ export async function maskify(masks) {
         return;
       }
       console.log(detection);
-      console.log(detection.landmarks.getLeftEyeBrow());
+      console.log(detection.landmarks.getMouth());
 
       const overlayValues = getOverlayValues(detection.landmarks);
 
@@ -65,15 +73,16 @@ export async function maskify(masks) {
       overlay.alt = 'mask overlay.';
       overlay.style.cssText = `
         position: absolute;
-        left: ${overlayValues.leftOffset * scale}px;
-        top: ${overlayValues.topOffset * scale}px;
-        width: ${overlayValues.width * scale}px;
-        transform: rotate(${overlayValues.angle}deg);
+        left: ${overlayValues.mouthOffsetL}px;
+        top: ${overlayValues.mouthTop}px;
+        transform: scale(${scale})
         padding: 2rem;
       `;
 
       item.appendChild(overlay);
     };
+
+    //     width: ${overlayValues.width * scale}px;
 
     // To avoid CORS issues we create a cross-origin-friendly copy of the image.
     const image = new Image();
