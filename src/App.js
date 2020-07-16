@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { maskify } from './util/maskify';
 import Webcam from './components/Webcam';
 

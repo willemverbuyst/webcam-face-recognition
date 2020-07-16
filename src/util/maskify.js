@@ -68,7 +68,7 @@ export async function maskify(masks) {
         top: ${overlayValues.topOffset * scale}px;
         width: ${overlayValues.width * scale}px;
         transform: rotate(${overlayValues.angle}deg);
-        z-index: 100;
+        padding: 2rem;
       `;
 
       item.appendChild(overlay);

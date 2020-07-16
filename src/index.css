@@ -12,10 +12,6 @@ code {
     monospace;
 }
 
-.image-overlay {
-  position: absolute;
-}
-
 .itemWithImg {
   position: relative;
 }
